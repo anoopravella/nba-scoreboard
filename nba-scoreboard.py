@@ -2,7 +2,7 @@ from lxml import html
 import requests
 import sys
 
-# function to remove 
+# function to remove spaces, newlines, and other undesirable characters from strings
 def clean_data (raw_list, destination_list) :
 	for element in raw_list :
 		element = element.replace('\n', '')
@@ -11,7 +11,6 @@ def clean_data (raw_list, destination_list) :
 		destination_list.append(element)
 
 	return destination_list
-
 
 # main program
 
@@ -26,7 +25,7 @@ else :
 	url = 'https://www.si.com/nba/scoreboard'
 
 
-page = requests.get(url, headers={'User-Agent': 'nbScoresRobot/1.0 (aravella1@gmail.com)'})
+page = requests.get(url, headers={'User-Agent': 'nbaScoresRobot/1.0 (aravella1@gmail.com)'})
 
 tree = html.fromstring(page.text)
 
@@ -58,15 +57,15 @@ homeTeamsRecordProcessed = clean_data(homeTeamsRecordRaw, homeTeamsRecordProcess
 
 
 # games in progress
-if tree.xpath('//div[@class="status-active uppercase"]/text()') :
+if tree.xpath('//span[@class="status-active uppercase"]/text()') :
 	
 	clocks = tree.xpath('//span[@class="status-active uppercase"]/text()')
 	gameStatus = clean_data(clocks, gameStatus)
 
-	awayScoresRaw = tree.xpath("//div[@class='status-active uppercase']/../../../div[2]/div/div[1]/div/div[1]/div[3]/div/text()")
+	awayScoresRaw = tree.xpath("//span[@class='status-active uppercase']/../../../div[2]/div/div[1]/div/div[1]/div[3]/div/text()")
 	awayScores = clean_data(awayScoresRaw, awayScores)
 
-	homeScoresRaw = tree.xpath("//div[@class='status-active uppercase']/../../../div[2]/div/div[1]/div/div[3]/div[3]/div/text()")
+	homeScoresRaw = tree.xpath("//span[@class='status-active uppercase']/../../../div[2]/div/div[1]/div/div[3]/div[3]/div/text()")
 	homeScores = clean_data(homeScoresRaw, homeScores)
 
 # games not yet started
@@ -79,7 +78,6 @@ if tree.xpath('//div[@class="float-left status-container"]/strong/text()') :
 		awayScores.append('-')
 		homeScores.append('-')
 	
-
 # games ended
 if tree.xpath('//div[@class="status-final"]/text()') :
 
