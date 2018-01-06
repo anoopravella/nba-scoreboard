@@ -1,5 +1,5 @@
 # nba-scoreboard
-A program that returns the scores for NBA games to the terminal.
+A program that returns the scores for NBA games to the command line.
 Mainly created as an exercise to gain experience web scraping with python and xpath.
 
 ## Description
