@@ -74,7 +74,11 @@ if tree.xpath('//div[@class="float-left status-container"]/strong/text()') :
 	times = tree.xpath('//div[@class="float-left status-container"]/strong/text()')
 	gameStatus = clean_data(times, gameStatus)
 
-	for time in times :
+	clean_times = []
+	clean_times = clean_data(times, clean_times)
+	clean_times = list(filter(None, clean_times))
+
+	for time in clean_times :
 		awayScores.append('-')
 		homeScores.append('-')
 	
